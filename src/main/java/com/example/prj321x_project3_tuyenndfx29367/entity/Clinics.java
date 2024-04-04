@@ -48,6 +48,7 @@ public class Clinics {
 
     }
 
+
     public Clinics(int id, String name, String address, String phoneNumber, String introductionHTML, String description) {
         this.id = id;
         this.name = name;
