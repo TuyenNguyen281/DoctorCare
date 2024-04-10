@@ -44,6 +44,7 @@ public class User {
     private int statusLockAcct;
     @Column(name="reasionLockAcct")
     private String reasionLockAcct;
+    
     @Column(name="confirm_password")
     private String confirmPassword;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
