@@ -39,6 +39,11 @@ public class User {
     private String password;
     @Column(name ="createdAt")
     private String createdAt;
+
+    @Column(name="statusLockAcct")
+    private int statusLockAcct;
+    @Column(name="reasionLockAcct")
+    private String reasionLockAcct;
     @Column(name="confirm_password")
     private String confirmPassword;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -63,6 +68,7 @@ public class User {
         this.avatar = avatar;
         this.password = password;
         this.createdAt = (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());;
+        this.statusLockAcct= 1;
         this.confirmPassword = confirmPassword;
         this.role = role;
     }
@@ -169,6 +175,22 @@ public class User {
 
     public void setMultipartFile(MultipartFile multipartFile) {
         this.multipartFile = multipartFile;
+    }
+
+    public int getStatusLockAcct() {
+        return statusLockAcct;
+    }
+
+    public void setStatusLockAcct(int statusLockAcct) {
+        this.statusLockAcct = statusLockAcct;
+    }
+
+    public String getReasionLockAcct() {
+        return reasionLockAcct;
+    }
+
+    public void setReasionLockAcct(String reasionLockAcct) {
+        this.reasionLockAcct = reasionLockAcct;
     }
 
     @Override

@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/apiAdmin")
@@ -39,6 +37,8 @@ public class AdminRestController {
 
     @Autowired
     private DoctorUserService doctorUserService;
+
+
 
     @PostMapping("/registerDoctor")
     public ResponseEntity<?> registerDoctor(@RequestPart("doctorUser") DoctorUser doctorUser, @RequestPart("multipartFile") MultipartFile multipartFile) {
@@ -82,5 +82,6 @@ public class AdminRestController {
         doctorUserService.saveDoctorUser(doctorUser);
         return new ResponseEntity<>(new ResponseMassage(HttpStatus.OK.value(), "Create success!", System.currentTimeMillis()), HttpStatus.OK);
     }
+
 
 }
