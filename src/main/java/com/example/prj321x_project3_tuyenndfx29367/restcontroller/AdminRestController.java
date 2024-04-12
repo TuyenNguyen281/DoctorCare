@@ -83,5 +83,16 @@ public class AdminRestController {
         return new ResponseEntity<>(new ResponseMassage(HttpStatus.OK.value(), "Create success!", System.currentTimeMillis()), HttpStatus.OK);
     }
 
+    @PostMapping("/lockAcct/{usedId}")
+    public ResponseEntity<?> lockAcct(@PathVariable("usedId") int usedId, @ModelAttribute("reason") String reasonLockAcct){
+        System.out.println(reasonLockAcct);
+        Optional<User> optionalUser = userService.findUserById(usedId);
+        User user = optionalUser.get();
+        user.setStatusLockAcct(0);
+        user.setReasionLockAcct(reasonLockAcct);
+        userService.saveUser(user);
+        return new ResponseEntity<>(new ResponseMassage(HttpStatus.OK.value(), "User lock acct success!", System.currentTimeMillis()), HttpStatus.OK);
+
+    }
 
 }
