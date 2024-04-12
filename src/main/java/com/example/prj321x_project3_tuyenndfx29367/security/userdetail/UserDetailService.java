@@ -19,6 +19,9 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("222222222222222");
         User user = userService.findUserByEmail(email);
-        return UserPrinciple.build(user);
+        if (user.getStatusLockAcct() ==1 ) {
+            return UserPrinciple.build(user);
+        }
+        return null;
     }
 }
