@@ -1,17 +1,19 @@
 package com.example.prj321x_project3_tuyenndfx29367.restcontroller;
 
+import com.example.prj321x_project3_tuyenndfx29367.dto.reponse.ResponseDoctorUser;
+import com.example.prj321x_project3_tuyenndfx29367.dto.reponse.ResponseListPatients;
 import com.example.prj321x_project3_tuyenndfx29367.dto.reponse.ResponseMassage;
 import com.example.prj321x_project3_tuyenndfx29367.entity.*;
 import com.example.prj321x_project3_tuyenndfx29367.security.jwt.JwtProvider;
 import com.example.prj321x_project3_tuyenndfx29367.service.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -74,6 +76,23 @@ public class UserRestController {
         return new ResponseEntity<>(listTopSpecialization, HttpStatus.OK);
 
     }
+    @GetMapping("/personalInformation")
+    public ResponseEntity personalInformation(HttpServletRequest request) {
+        User user = getUserFromToken(request);
+        List<ResponseListPatients> patientsList = patientsService.findAllByUser(user);
+        return new ResponseEntity<>(patientsList, HttpStatus.OK);
+
+    }
+    @GetMapping("/generalSearch")
+     public  ResponseEntity generalSearch (@RequestParam Map<String, String> params) {
+        List<ResponseDoctorUser> listDoctorUsers = doctorUserService.findAll1(params.get("City"),params.get("Hospital"),params.get("sumBooking"));
+        return new ResponseEntity<>(listDoctorUsers, HttpStatus.OK);
+    }
+    @GetMapping("/searchBySpecialization")
+    public  ResponseEntity generalSearch (@RequestParam("specialization") String specialization) {
+        List<ResponseDoctorUser> listDoctorUsers = doctorUserService.findAllBySpecialization(specialization);
+        return new ResponseEntity<>(listDoctorUsers, HttpStatus.OK);
+    }
 
     private User getUserFromToken(HttpServletRequest request) {
         String token = getJwt(request);
@@ -92,5 +111,6 @@ public class UserRestController {
         }
         return null;
     }
+
 
 }

@@ -3,6 +3,7 @@ package com.example.prj321x_project3_tuyenndfx29367.service;
 import com.example.prj321x_project3_tuyenndfx29367.dto.reponse.ResponseListPatients;
 import com.example.prj321x_project3_tuyenndfx29367.entity.DoctorUser;
 import com.example.prj321x_project3_tuyenndfx29367.entity.Patients;
+import com.example.prj321x_project3_tuyenndfx29367.entity.User;
 import com.example.prj321x_project3_tuyenndfx29367.repository.IPatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class PatientsServiceImpl implements PatientsService {
     @Override
     public Optional<Patients> findPatientById(int patientId) {
         return patientsRepository.findById((long) patientId);
+    }
+
+    @Override
+    public List<ResponseListPatients> findAllByUser(User user) {
+        return patientsRepository.findAllByUser(user);
     }
 
 
