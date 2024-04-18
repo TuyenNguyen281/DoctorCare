@@ -9,6 +9,7 @@ import com.example.prj321x_project3_tuyenndfx29367.entity.Role;
 import com.example.prj321x_project3_tuyenndfx29367.entity.User;
 import com.example.prj321x_project3_tuyenndfx29367.security.jwt.JwtProvider;
 import com.example.prj321x_project3_tuyenndfx29367.security.userdetail.UserPrinciple;
+import com.example.prj321x_project3_tuyenndfx29367.service.EmailService;
 import com.example.prj321x_project3_tuyenndfx29367.service.RoleService;
 import com.example.prj321x_project3_tuyenndfx29367.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class AuthorRestController {
     JwtProvider jwtProvider;
 
     @Autowired
-    private MailSender mailSender;
+    private EmailService emailService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestPart("user") User user, @RequestPart("multipartFile") MultipartFile multipartFile) {
@@ -124,19 +125,12 @@ public class AuthorRestController {
             String to = loginForm.getEmail();
             String subject = "Reset Password!";
             String content = "New Password : " + newPassword ;
-            sendEmail(from, to,subject,content);                    //Gủi mail
+            emailService.sendEmail(from, to,subject,content);                    //Gủi mail
             return new ResponseEntity<>(new ResponseMassage(HttpStatus.OK.value(), "Reset password success!", System.currentTimeMillis()), HttpStatus.OK);
 
     }
 
-    private void sendEmail(String from, String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(from);
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-        mailSender.send(mailMessage);
-    }
+
 
     private String randomPassword(int numberOfCharactor) {
         String digits = "0123456789";
